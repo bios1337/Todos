@@ -7,8 +7,15 @@ const PORT = process.env.PORT || 5000;
 // Connect Database
 connectDB();
 
+// Init Middleware
+app.use(
+	express.json({
+		extended: false
+	})
+);
+
 // Connect Routes
-app.use('/api/todo', require('./routes/api/todo.js'));
+app.use('/api/todo', require('./routes/api/todo'));
 
 app.get('/', (req, res) => res.send('API Running'));
 

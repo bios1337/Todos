@@ -19,7 +19,7 @@ export class AddTodo extends Component {
 				<input
 					type="text"
 					name="title"
-					autocomplete="off"
+					autoComplete="off"
 					placeholder="Add todo..."
 					style={{ flex: '10', padding: '5px' }}
 					value={this.state.title}

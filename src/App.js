@@ -3,51 +3,35 @@ import './App.css';
 import Todos from './components/Todos';
 import Header from './components/layout/Header';
 import AddTodo from './components/AddTodo';
+import axios from 'axios';
 
 class App extends React.Component {
 	state = {
-		todos: [
-			{
-				id: 1,
-				title: 'Take out the trash',
-				completed: false
-			},
-			{
-				id: 2,
-				title: 'Dinner with wife',
-				completed: false
-			},
-			{
-				id: 3,
-				title: 'Meeting with boss',
-				completed: false
-			}
-		]
+		todos: []
 	};
 
+	componentDidMount() {
+		axios.get('api/todo/', { crossdomain: true }).then((res) => this.setState({ todos: res.data }));
+	}
+
+	// Mark complete a todo
 	markComplete = (id) => {
-		this.setState({
-			todos: this.state.todos.map((todo) => {
-				if (todo.id === id) {
-					todo.completed = !todo.completed;
-				}
-				return todo;
-			})
-		});
+		axios.put(`api/todo/${id}`, { crossdomain: true }).then((res) => this.setState({ todos: res.data }));
 	};
 
+	// Delete a todo
 	delTodo = (id) => {
-		this.setState({ todos: [ ...this.state.todos.filter((todo) => todo.id !== id) ] });
+		axios.delete(`api/todo/delete/${id}`, { crossdomain: true }).then((res) => this.setState({ todos: res.data }));
 	};
 
+	// Add a todo
 	addTodo = (title) => {
 		if (title === '') return;
-		const newTodo = {
-			id: 4,
-			title,
-			completed: false
-		};
-		this.setState({ todos: [ ...this.state.todos, newTodo ] });
+		axios
+			.post('api/todo/add', {
+				title
+			})
+			.then((res) => this.setState({ todos: res.data }));
 	};
 
 	render() {

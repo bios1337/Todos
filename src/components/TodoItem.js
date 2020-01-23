@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Checkbox from './Checkbox';
 
 export class TodoItem extends Component {
 	getStyle = () => {
@@ -11,12 +12,12 @@ export class TodoItem extends Component {
 	};
 
 	render() {
-		const { title, id } = this.props.todo;
+		const { title, _id, completed } = this.props.todo;
 		return (
 			<div style={this.getStyle()}>
 				<p>
-					<input type="checkbox" onChange={this.props.markComplete.bind(this, id)} /> {title}
-					<button onClick={this.props.delTodo.bind(this, id)} style={btnStyle}>
+					<Checkbox onChange={this.props.markComplete.bind(this, _id)} checked={completed} /> {title}
+					<button onClick={this.props.delTodo.bind(this, _id)} style={btnStyle}>
 						x
 					</button>
 				</p>
@@ -36,7 +37,7 @@ const btnStyle = {
 
 // PropTypes Validation
 TodoItem.propTypes = {
-	todo: PropTypes.array.isRequired
+	todo: PropTypes.object.isRequired
 };
 
 export default TodoItem;
